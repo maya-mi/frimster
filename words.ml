@@ -12,3 +12,20 @@ let rec range (min : int) (max : int) : int list =
 let abc = List.map char_of_int (range 65 90);;
 type word = letter list;;
 
+open Hashtbl ;;
+
+let buildTable (unit) : (string, int) Hashtbl.t  =
+  let result = create 100000 in
+  let reader = open_in "ospd.txt" in
+  let _ = (try
+    while true do
+      let temp = input_line reader in
+      add result temp (hash temp)
+    done
+  with
+    End_of_file -> ()) in
+  result
+;;
+
+
+let dict = buildTable () ;;
