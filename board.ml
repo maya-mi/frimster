@@ -18,7 +18,9 @@ class board =
 	method react ({mouse_x; mouse_y; button = _ ; keypressed = _; key = _}: Graphics.status) = 
 		let x = (mouse_x - length) / length in 
 		let y = (mouse_y - length) / length in 
-		layout.(x).(y) <- new tile {id = char_of_int 90; score = 0}
+		layout.(x).(y) <- new tile {id = char_of_int 90; score = 0};
+		layout.(x).(y)#draw x y;
+		
 
 	end 
 

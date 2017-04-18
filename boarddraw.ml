@@ -37,14 +37,6 @@ let rec delay (sec: float) : unit =
 
 let framedelay () = delay cFRAMEDELAY ;;
 
-let x11_initialize_update iters_left =
-  if !cSTEPPING then
-    (let char = G.read_key () in
-     if char = 'x' then
-       (printf "User requested exit\n";
-        flush stdout;
-        raise Exit)) ;;
-
 let x11_initialize () =
   (* open a graphics window to draw into and size it appropriately *)
   G.open_graph "";
@@ -54,41 +46,45 @@ let x11_initialize () =
   G.auto_synchronize false;
   G.display_mode false;;
 
+
 let x11_finalize () =
   (* Close the window on keystroke *)
   ignore (G.read_key ()) ;;
 
+
+exception End;;  
+
+(*
 let listen () = 
 	x11_initialize ();
 	let b = new board in 
-	b#draw ();
-	while true do 
-		let s = Graphics.wait_next_event [Graphics.Button_down] in 
-		b#react s;
-		b#draw ();
-		x11_finalize ();
-	done;;
+  	b#draw ();
+	try
+		while true do 
+		  try
+			let s = Graphics.wait_next_event [Graphics.Button_down] in 
+			Graphics.clear_graph ();
+			print_int s.mouse_x;
+			(*b#react s;
+			b#draw ();*)
+		  with End -> raise End
+		done
+	with End -> x11_finalize ();;*)
+
+let listen () = 
+	x11_initialize ();
+	let b = new board in 
+  	b#draw ();
+	try
+		loop_at_exit [Graphics.Button_down; Poll] (fun s -> print_string "hello");
+	with
+	| End -> x11_finalize ();; 
+
+
+
+
 	
 listen ();;
 
 
 
-
-(*open Printf;;
-open Board;;
-let cFRAMESIZE = 500;;
-
-module G = Graphics;;
-
-let initialize () =
-  (* open a graphics window to draw into and size it appropriately *)
-  G.open_graph "";
-  G.resize_window cFRAMESIZE cFRAMESIZE;
-  (* turn off auto synchronizing; we'll handle double buffer
-     synchronization ourselves *)
-  G.auto_synchronize false;
-  G.display_mode false;;
-
-let finalize () =
-  (* Close the window on keystroke *)
-  ignore (G.read_key ()) ;;*)
