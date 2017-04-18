@@ -40,11 +40,10 @@ let framedelay () = delay cFRAMEDELAY ;;
 let x11_initialize () =
   (* open a graphics window to draw into and size it appropriately *)
   G.open_graph "";
-  G.resize_window windowSize windowSize;
+  G.resize_window windowSize windowSize;;
   (* turn off auto synchronizing; we'll handle double buffer
      synchronization ourselves *)
-  G.auto_synchronize false;
-  G.display_mode false;;
+
 
 
 let x11_finalize () =
@@ -54,37 +53,43 @@ let x11_finalize () =
 
 exception End;;  
 
+
+
 (*
 let listen () = 
 	x11_initialize ();
 	let b = new board in 
   	b#draw ();
 	try
-		while true do 
-		  try
-			let s = Graphics.wait_next_event [Graphics.Button_down] in 
-			Graphics.clear_graph ();
-			print_int s.mouse_x;
-			(*b#react s;
-			b#draw ();*)
-		  with End -> raise End
-		done
-	with End -> x11_finalize ();;*)
+		loop_at_exit [Graphics.Button_down; Poll] (fun s -> sprintf "Mouse position: %d,%d" s.mouse_x s.mouse_y);
+	with
+	| End -> x11_finalize ();; *)
+
+
+(*
+let () =
+  open_graph "";
+  loop ();
+  close_graph ();*)
 
 let listen () = 
 	x11_initialize ();
 	let b = new board in 
+	b#init ();
   	b#draw ();
-	try
-		loop_at_exit [Graphics.Button_down; Poll] (fun s -> print_string "hello");
-	with
-	| End -> x11_finalize ();; 
+  	let rec loop () =
+ 		let s = wait_next_event [Button_down] in
+  		clear_graph ();
+  		b#react s;
+ 		b#draw (); 
+  		loop () in 
+	loop ();
+	x11_finalize ();;
 
 
-
-
-	
 listen ();;
+
+
 
 
 
