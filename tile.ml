@@ -1,38 +1,35 @@
-open Word;;
+open Words;;	
 
-(*class virtual tile ?(c: letter = {id = char_of_int 32; score = 0}) 
-					(x: int) (y: int) = 
- object
-	val ch: char 
-	val score: int
-	val x : int
-	val y: int
+let cFRAMESIZE = 750;;
+let length = cFRAMESIZE / 17;;
 
-	method draw : unit -> unit
-	method getX : int
-	method getY : int
-
-	method init: letter -> unit
- end	*)
-
-
-class tile ?(c: letter = {id = char_of_int 32; score = 0}) 
-			(x: int) (y: int) = 
+class tile  ({id; score}: letter) = 
  object (this)
- 	val mutable ch = c.id
- 	val mutable score = id.score
- 	val x = x
- 	val y = y
-
- 	method getX = this#x
- 	method getY = this#y
+ 	val mutable ch = id
+ 	val mutable score = score
+ 	val mutable x = min_int
+ 	val mutable y = min_int
 
  	method init {id; score = n} : unit = 
- 		ch := id;
- 		score := n
+ 		ch <- id;
+ 		score <- n
 
- 	method draw () = 
- 		Graphics.draw_rect x y 100 100
+ 	method getX = x
+ 	method getY = y
+
+ 	method draw x0 y0 = 
+ 		let l = length * 3 / 4 in
+ 		let edge = (length  - l) / 2 in
+ 		x <- x0;
+ 		y <- y0;
+ 		Graphics.draw_rect ((x + 1) * length + edge) ((y + 1) * length + edge) l l;
+ 		Graphics.moveto ((x + 1) * length + length / 2) ((y+ 1) * length + length / 2);
+ 		Graphics.draw_char ch
+ 		(*Graphics.draw_poly (Array.of_list [((x + 1) * length, (y + 1) * length);
+ 						   ((x + 1) * length + edge, (y + 1) * length) + edge);
+ 						   ((x + 1) * length + edge, (y + 2) * length) - edge);
+						   ((x + 1) * length, (y + 2) * length) - edge)])*)
+						   
  end
 
 
