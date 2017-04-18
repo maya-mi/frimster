@@ -36,7 +36,8 @@ let rec letterAdd acc x c =
 let fullSet  = List.fold_left2 letterAdd [] freq abc;;
 
 (*http://stackoverflow.com/questions/15095541/how-to-shuffle-list-in-on-in-ocaml*)
-let shuffle lst = 
+let shuffle lst =
+  Random.self_init (); 
   let withRandom = List.map (fun x -> (Random.bits (), x)) lst in
   List.map snd (List.sort compare withRandom);;
 
