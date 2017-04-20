@@ -81,7 +81,7 @@ class board =
 			for i = (listFind min ys) to (listFind max ys) do
 				wrd := layout.(List.hd xs).(i)#getLetter :: !wrd;
 			done;
-			print_string (toString !wrd); true)
+			Graphics.draw_string (toString !wrd); true)
 		else if ySame then true
 		else false
 		(*if ySame then 
