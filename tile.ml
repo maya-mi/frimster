@@ -16,7 +16,10 @@ class tile  ({id; score}: letter) =
 
  	method getX = x
  	method getY = y
+
  	method isBlank = ch = ' '
+
+ 	method getLetter = {id = this#getid; score = this#getscore}
 
  	method getid  = id
  	method getscore = score
