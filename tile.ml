@@ -16,9 +16,11 @@ class tile  ({id; score}: letter) =
 
  	method getX = x
  	method getY = y
+ 	method isBlank = ch = ' '
 
  	method getid  = id
  	method getscore = score
+ 	method getLetter = {id = ch; score}
 
  	method draw x0 y0 = 
  		let l = length * 3 / 4 in

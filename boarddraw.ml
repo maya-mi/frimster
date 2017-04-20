@@ -71,7 +71,7 @@ let () =
   open_graph "";
   loop ();
   close_graph ();*)
-
+(*
 let listen () = 
 	x11_initialize ();
 	let b = new board in 
@@ -84,8 +84,14 @@ let listen () =
  		b#draw (); 
   		loop () in 
 	loop ();
-	x11_finalize ();;
+	x11_finalize ();;*)
 
+let listen () = 
+	x11_initialize ();
+	let b = new board in 
+	b#init ();
+	b#draw (); 
+	loop_at_exit [Button_down; Key_pressed] (fun s -> clear_graph (); b#react s; b#draw ());;
 
 listen ();;
 
