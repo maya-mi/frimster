@@ -89,7 +89,7 @@ let getScore (input : word) : int =
 ;;
 
 let isWord (test : word) : bool =
-  mem dict (toString test)
+  mem dict (String.lowercase (toString test))
 ;;
 
 (*let s = makeWord "zoo" in

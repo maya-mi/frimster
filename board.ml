@@ -81,7 +81,7 @@ class board =
 			for i = (listFind min ys) to (listFind max ys) do
 				wrd := layout.(List.hd xs).(i)#getLetter :: !wrd;
 			done;
-			Graphics.draw_string (toString !wrd); true)
+			Graphics.draw_string (toString !wrd); isWord !wrd)
 		else if ySame then true
 		else false
 		(*if ySame then 
@@ -126,7 +126,7 @@ class board =
 	
 	method keyParse k = 
 		if k = ' ' then 
-			if this#is_valid () then this#refresh ()
+			if this#is_valid () then let _ = Graphics.draw_string "hi" in this#refresh ()
 			else this#reset ()
 		else if k = 'r' then this#reset ()
 
