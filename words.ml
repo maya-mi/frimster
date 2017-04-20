@@ -92,6 +92,6 @@ let isWord (test : word) : bool =
   mem dict (toString test)
 ;;
 
-let s = makeWord "zoo" in
-print_int (getScore s) ;;
+(*let s = makeWord "zoo" in
+print_int (getScore s) ;;*)
 
