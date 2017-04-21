@@ -30,7 +30,7 @@ let freq = [9; 2; 2; 4; 12; 2; 3; 2; 9; 1; 1; 4; 2; 6; 8; 2; 1; 6; 4; 6; 4; 2; 2
 
 let rec letterAdd acc x c = 
   if x > 0 then 
-    letterAdd ({id = c; score = (detVal (Char.escaped c))} :: acc) (x - 1) c
+    letterAdd ({id = c; score = (detVal (String.lowercase (Char.escaped c)))} :: acc) (x - 1) c
   else acc;;
 
 let fullSet  = List.fold_left2 letterAdd [] freq abc;;
