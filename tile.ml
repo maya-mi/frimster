@@ -23,6 +23,10 @@ class tile  ({id; score}: letter) =
 
  	method getid  = id
  	method getscore = score
+<<<<<<< HEAD
+=======
+
+>>>>>>> ec47f62dfce867f12bf0d8572e7bbfce31b04503
 
  	method draw x0 y0 = 
  		let l = length * 3 / 4 in
