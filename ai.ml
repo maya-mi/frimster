@@ -35,19 +35,19 @@ let compileWord (board : tile array array) (hor : bool) (start : tile) : word =
   if hor then
     (let cur = ref start#getY in
     while !cur < Array.length board && not board.(start#getY).(!cur)#isBlank do
-      result := !result @ [board.(start#getx).(!cur)#getLetter] ;
+      result := !result @ [board.(start#getX).(!cur)#getLetter] ;
       cur := !cur + 1
     done ;
-    cur := start#gety - 1 ;
-     while cur >= 0 && not board.(start#getX).(!cur)#isBlank do
+    cur := start#getY - 1 ;
+     while !cur >= 0 && not board.(start#getX).(!cur)#isBlank do
       result := board.(start#getX).(!cur)#getLetter :: !result ;
       cur := !cur - 1 ; 
     done ;
     !result)
   else
-    (let cur = ref start#getx in
-    while !cur < Array.length board && not board.(!cur).(start#gety)#isBlank do
-      result := !result @ [board.(cur).(start#getY)#getLetter] ;
+    (let cur = ref start#getX in
+    while !cur < Array.length board && not board.(!cur).(start#getY)#isBlank do
+      result := !result @ [board.(!cur).(start#getY)#getLetter] ;
       cur := !cur + 1
     done ;
     cur := tile#getX - 1 ;
